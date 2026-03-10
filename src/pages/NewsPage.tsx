@@ -129,9 +129,9 @@ const NewsPage = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen pt-20">
+    <div className="bg-white min-h-screen">
       {/* Header Section */}
-      <section className="bg-gray-50 py-16 border-b border-gray-100">
+      <section className="bg-gray-50 pt-32 pb-16 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

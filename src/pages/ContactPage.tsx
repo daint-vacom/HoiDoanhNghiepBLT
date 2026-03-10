@@ -4,9 +4,9 @@ import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 
 const ContactPage = () => {
   return (
-    <div className="pt-24 pb-20">
+    <div>
       {/* Hero Section */}
-      <section className="bg-red-900 text-white py-16 px-4">
+      <section className="bg-red-900 text-white pt-32 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
