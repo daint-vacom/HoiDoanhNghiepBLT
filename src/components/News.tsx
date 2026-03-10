@@ -55,30 +55,58 @@ const News = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
-    <motion.section 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.8 }}
-      className="py-16 bg-white"
-    >
+    <section className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-10 border-b border-gray-100 pb-4">
-          <div className="flex items-center space-x-3">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+          className="flex justify-between items-end mb-10 border-b border-gray-100 pb-4"
+        >
+          <motion.div variants={itemVariants} className="flex items-center space-x-3">
             <Newspaper className="w-8 h-8 text-red-700" />
             <h2 className="text-3xl font-bold text-red-800">
               Tin tức
             </h2>
-          </div>
-          <button className="text-red-700 font-medium flex items-center hover:underline">
+          </motion.div>
+          <motion.button variants={itemVariants} className="text-red-700 font-medium flex items-center hover:underline">
             Xem tất cả <ChevronRight className="w-4 h-4 ml-1" />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15,
+              }
+            }
+          }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        >
           {/* Main Featured News - Left Column */}
-          <div className="h-full">
+          <motion.div variants={itemVariants} className="h-full">
             <div className="relative group cursor-pointer overflow-hidden rounded-lg shadow-sm border border-gray-100 h-full flex flex-col">
               <div className="aspect-video overflow-hidden">
                 <img 
@@ -101,12 +129,16 @@ const News = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column - 3 Stacked Cards */}
           <div className="flex flex-col gap-4 h-full">
             {newsItems.slice(1).map((item, index) => (
-              <div key={index} className="group cursor-pointer flex flex-col sm:flex-row bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm flex-1">
+              <motion.div 
+                key={index} 
+                variants={itemVariants}
+                className="group cursor-pointer flex flex-col sm:flex-row bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm flex-1"
+              >
                 <div className="sm:w-[45%] aspect-[2/1] sm:aspect-auto overflow-hidden">
                   <img 
                     src={item.image} 
@@ -127,15 +159,29 @@ const News = () => {
                     {item.excerpt}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.4,
+              }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
+        >
           {subNews.map((item, index) => (
-            <div key={index} className="group cursor-pointer">
+            <motion.div key={index} variants={itemVariants} className="group cursor-pointer">
               <div className="h-48 overflow-hidden rounded-lg mb-4 shadow-sm border border-gray-100">
                 <img 
                   src={item.image} 
@@ -151,11 +197,11 @@ const News = () => {
               <h4 className="text-base font-bold text-gray-900 line-clamp-2 group-hover:text-red-700 transition-colors">
                 {item.title}
               </h4>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

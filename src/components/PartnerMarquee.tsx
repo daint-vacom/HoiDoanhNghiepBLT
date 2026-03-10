@@ -16,23 +16,44 @@ const PartnerMarquee = () => {
   // Duplicate the list for seamless looping
   const duplicatedPartners = [...partners, ...partners];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
   return (
-    <motion.section 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
-      className="py-16 bg-gray-50 border-t border-gray-100 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="flex flex-col items-center justify-center text-center space-y-4">
+    <section className="py-16 bg-gray-50 border-t border-gray-100 overflow-hidden">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12"
+      >
+        <motion.div variants={itemVariants} className="flex flex-col items-center justify-center text-center space-y-4">
           <h2 className="text-3xl font-bold text-red-800 uppercase tracking-wider">
             Đối tác chiến lược
           </h2>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       
-      <div className="relative flex overflow-x-hidden py-4">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.4 }}
+        className="relative flex overflow-x-hidden py-4"
+      >
         <motion.div 
           className="flex whitespace-nowrap items-center"
           animate={{ x: ['0%', '-50%'] }}
@@ -56,8 +77,8 @@ const PartnerMarquee = () => {
             </div>
           ))}
         </motion.div>
-      </div>
-    </motion.section>
+      </motion.div>
+    </section>
   );
 };
 

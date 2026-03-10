@@ -34,30 +34,67 @@ const Activities = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } },
+  };
+
   return (
-    <motion.section 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
-      className="py-16 bg-white"
-    >
+    <section className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-10">
-          <div className="flex items-center space-x-3">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+          className="flex justify-between items-end mb-10"
+        >
+          <motion.div variants={itemVariants} className="flex items-center space-x-3">
             <Calendar className="w-8 h-8 text-red-700" />
             <h2 className="text-3xl font-bold text-red-800">
               Hoạt động Hội
             </h2>
-          </div>
-          <button className="text-red-700 font-medium flex items-center hover:underline">
+          </motion.div>
+          <motion.button variants={itemVariants} className="text-red-700 font-medium flex items-center hover:underline">
             Xem tất cả <ChevronRight className="w-4 h-4 ml-1" />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15,
+              }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           {activities.map((activity, index) => (
-            <div key={index} className="flex flex-col sm:flex-row bg-gray-50 rounded-lg overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow group">
+            <motion.div 
+              key={index} 
+              variants={cardVariants}
+              className="flex flex-col sm:flex-row bg-gray-50 rounded-lg overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow group"
+            >
               <div className="sm:w-1/3 h-48 sm:h-auto overflow-hidden">
                 <img 
                   src={activity.image} 
@@ -86,11 +123,11 @@ const Activities = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

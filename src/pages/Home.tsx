@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
@@ -20,9 +21,15 @@ const Home = () => {
         <Activities />
         
         {/* Promotional Banner Section */}
-        <section className="py-8 bg-white">
+        <section className="py-8 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <div className="relative h-48 rounded-lg overflow-hidden group cursor-pointer">
                 <img 
                   src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop" 
@@ -45,7 +52,7 @@ const Home = () => {
                   <span className="text-white text-2xl font-bold uppercase tracking-widest border-2 border-white px-6 py-2">Xúc tiến thương mại</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -54,9 +61,15 @@ const Home = () => {
         <PartnerMarquee />
 
         {/* Bottom Banner Section */}
-        <section className="pb-16 bg-white">
+        <section className="pb-16 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative h-64 rounded-xl overflow-hidden shadow-xl">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8 }}
+              className="relative h-64 rounded-xl overflow-hidden shadow-xl"
+            >
               <img 
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
                 alt="Large Banner" 
@@ -70,7 +83,7 @@ const Home = () => {
                   Đăng ký tham gia
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       </main>
