@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
+import NewsPage from './pages/NewsPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import MembersPage from './pages/MembersPage';
 
 // Placeholder components for other pages
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -17,24 +21,24 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="hoi-vien" element={<PlaceholderPage title="Hội viên" />} />
+          <Route path="hoi-vien" element={<MembersPage />} />
           
           <Route path="tin-tuc">
-            <Route index element={<PlaceholderPage title="Tin tức" />} />
-            <Route path="hoat-dong" element={<PlaceholderPage title="Tin hoạt động hội" />} />
-            <Route path="giao-thuong" element={<PlaceholderPage title="Tin giao thương" />} />
-            <Route path="doi-tac" element={<PlaceholderPage title="Tin hội viên đối tác" />} />
+            <Route index element={<NewsPage />} />
+            <Route path="hoat-dong" element={<NewsPage />} />
+            <Route path="giao-thuong" element={<NewsPage />} />
+            <Route path="doi-tac" element={<NewsPage />} />
           </Route>
 
           <Route path="gioi-thieu">
-            <Route index element={<PlaceholderPage title="Giới thiệu" />} />
-            <Route path="bltba" element={<PlaceholderPage title="Giới thiệu về hội doanh nghiệp BLTBA" />} />
+            <Route index element={<AboutPage />} />
+            <Route path="bltba" element={<AboutPage />} />
             <Route path="ban-chap-hanh" element={<PlaceholderPage title="Ban chấp hành" />} />
             <Route path="van-phong" element={<PlaceholderPage title="Văn phòng BLTBA" />} />
             <Route path="dieu-le" element={<PlaceholderPage title="Điều lệ hội" />} />
           </Route>
 
-          <Route path="lien-he" element={<PlaceholderPage title="Liên hệ" />} />
+          <Route path="lien-he" element={<ContactPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import About from '../components/About';
 import Activities from '../components/Activities';
 import News from '../components/News';
 import PartnerMarquee from '../components/PartnerMarquee';
-import Footer from '../components/Footer';
 
 const Home = () => {
   return (
