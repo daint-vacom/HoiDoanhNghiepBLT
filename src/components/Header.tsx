@@ -92,9 +92,9 @@ const Header = () => {
               <button className="text-gray-500 hover:text-red-700">
                 <Search className="w-5 h-5" />
               </button>
-              <button className="bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-red-800 transition-colors shadow-sm">
+              <Link to="/hoi-vien#dang-ky" className="bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-red-800 transition-colors shadow-sm">
                 Đăng ký Hội viên
-              </button>
+              </Link>
             </div>
           </nav>
 
@@ -140,9 +140,13 @@ const Header = () => {
               </div>
             ))}
             <div className="pt-4 pb-2 border-t border-gray-100">
-              <button className="w-full bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-red-800">
+              <Link 
+                to="/hoi-vien#dang-ky" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-center bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-red-800"
+              >
                 Đăng ký Hội viên
-              </button>
+              </Link>
             </div>
           </div>
         </div>
