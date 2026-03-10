@@ -14,12 +14,27 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Hoạt động Hội', hasDropdown: true },
-    { name: 'Hội viên', hasDropdown: true },
-    { name: 'Tin giao thương', hasDropdown: false },
-    { name: 'Tin tức', hasDropdown: true },
-    { name: 'Thư viện', hasDropdown: true },
-    { name: 'Về chúng tôi', hasDropdown: true },
+    { name: 'Hội viên', hasDropdown: false },
+    { 
+      name: 'Tin tức', 
+      hasDropdown: true,
+      subItems: [
+        'Tin hoạt động hội',
+        'Tin giao thương',
+        'Tin hội viên đối tác'
+      ]
+    },
+    { 
+      name: 'Giới thiệu', 
+      hasDropdown: true,
+      subItems: [
+        'Giới thiệu về hội doanh nghiệp BLTBA',
+        'Ban chấp hành',
+        'Văn phòng BLTBA',
+        'Điều lệ hội'
+      ]
+    },
+    { name: 'Liên hệ', hasDropdown: false },
   ];
 
   return (
@@ -50,11 +65,13 @@ const Header = () => {
                   {item.hasDropdown && <ChevronDown className="ml-1 w-4 h-4" />}
                 </button>
                 {item.hasDropdown && (
-                  <div className="absolute left-0 mt-0 w-48 bg-white shadow-xl rounded-b-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border-t-2 border-red-600">
+                  <div className="absolute left-0 mt-0 w-64 bg-white shadow-xl rounded-b-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border-t-2 border-red-600">
                     <div className="py-2">
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700">Tiểu mục 1</a>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700">Tiểu mục 2</a>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700">Tiểu mục 3</a>
+                      {item.subItems?.map((subItem) => (
+                        <a key={subItem} href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700">
+                          {subItem}
+                        </a>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -85,16 +102,30 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100">
+        <div className="lg:hidden bg-white border-t border-gray-100 max-h-[80vh] overflow-y-auto">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-700 hover:bg-gray-50"
-              >
-                {item.name}
-              </a>
+              <div key={item.name}>
+                <a
+                  href="#"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-700 hover:bg-gray-50"
+                >
+                  {item.name}
+                </a>
+                {item.hasDropdown && (
+                  <div className="pl-6 space-y-1">
+                    {item.subItems?.map((subItem) => (
+                      <a
+                        key={subItem}
+                        href="#"
+                        className="block px-3 py-1.5 rounded-md text-sm font-medium text-gray-500 hover:text-red-700 hover:bg-gray-50"
+                      >
+                        {subItem}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
             <div className="pt-4 pb-2 border-t border-gray-100">
               <button className="w-full bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-red-800">

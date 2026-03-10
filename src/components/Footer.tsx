@@ -51,11 +51,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-6 border-b border-red-800 pb-2 inline-block">Liên kết nhanh</h3>
             <ul className="space-y-3 text-sm text-red-100/70">
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Về chúng tôi</a></li>
               <li><a href="#" className="hover:text-amber-400 transition-colors">Hội viên</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Hoạt động Hội</a></li>
               <li><a href="#" className="hover:text-amber-400 transition-colors">Tin tức</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Điều khoản hoạt động</a></li>
+              <li><a href="#" className="hover:text-amber-400 transition-colors">Giới thiệu</a></li>
+              <li><a href="#" className="hover:text-amber-400 transition-colors">Liên hệ</a></li>
             </ul>
           </div>
 
