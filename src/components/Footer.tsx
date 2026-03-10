@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -8,10 +9,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Info */}
           <div className="space-y-6">
-            <div className="flex flex-col">
+            <Link to="/" className="flex flex-col">
               <span className="text-3xl font-bold tracking-tighter">BLTBA</span>
               <span className="text-[10px] uppercase font-semibold text-amber-400">Bình Lợi Trung Business Association</span>
-            </div>
+            </Link>
             <p className="text-red-100/70 text-sm leading-relaxed">
               Hội Doanh nghiệp Bình Lợi Trung là tổ chức kết nối các doanh nghiệp, thúc đẩy giao thương và hỗ trợ phát triển bền vững cho cộng đồng doanh nhân.
             </p>
@@ -51,10 +52,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-6 border-b border-red-800 pb-2 inline-block">Liên kết nhanh</h3>
             <ul className="space-y-3 text-sm text-red-100/70">
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Hội viên</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Tin tức</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Giới thiệu</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition-colors">Liên hệ</a></li>
+              <li><Link to="/hoi-vien" className="hover:text-amber-400 transition-colors">Hội viên</Link></li>
+              <li><Link to="/tin-tuc" className="hover:text-amber-400 transition-colors">Tin tức</Link></li>
+              <li><Link to="/gioi-thieu" className="hover:text-amber-400 transition-colors">Giới thiệu</Link></li>
+              <li><Link to="/lien-he" className="hover:text-amber-400 transition-colors">Liên hệ</Link></li>
             </ul>
           </div>
 

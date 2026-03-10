@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Menu, X, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,27 +15,29 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Hội viên', hasDropdown: false },
+    { name: 'Hội viên', path: '/hoi-vien', hasDropdown: false },
     { 
       name: 'Tin tức', 
+      path: '/tin-tuc',
       hasDropdown: true,
       subItems: [
-        'Tin hoạt động hội',
-        'Tin giao thương',
-        'Tin hội viên đối tác'
+        { name: 'Tin hoạt động hội', path: '/tin-tuc/hoat-dong' },
+        { name: 'Tin giao thương', path: '/tin-tuc/giao-thuong' },
+        { name: 'Tin hội viên đối tác', path: '/tin-tuc/doi-tac' }
       ]
     },
     { 
       name: 'Giới thiệu', 
+      path: '/gioi-thieu',
       hasDropdown: true,
       subItems: [
-        'Giới thiệu về hội doanh nghiệp BLTBA',
-        'Ban chấp hành',
-        'Văn phòng BLTBA',
-        'Điều lệ hội'
+        { name: 'Giới thiệu về hội doanh nghiệp BLTBA', path: '/gioi-thieu/bltba' },
+        { name: 'Ban chấp hành', path: '/gioi-thieu/ban-chap-hanh' },
+        { name: 'Văn phòng BLTBA', path: '/gioi-thieu/van-phong' },
+        { name: 'Điều lệ hội', path: '/gioi-thieu/dieu-le' }
       ]
     },
-    { name: 'Liên hệ', hasDropdown: false },
+    { name: 'Liên hệ', path: '/lien-he', hasDropdown: false },
   ];
 
   return (
@@ -46,7 +49,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+          <Link to="/" className="flex-shrink-0 flex items-center">
             <div className="flex items-center space-x-3">
               <img src="/logo.png" alt="BLTBA Logo" className="h-12 w-auto" />
               <div className="flex flex-col">
@@ -54,23 +57,30 @@ const Header = () => {
                 <span className="text-[8px] uppercase font-semibold text-amber-600 leading-none">Bình Lợi Trung Business Association</span>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-6 items-center">
             {navItems.map((item) => (
               <div key={item.name} className="relative group">
-                <button className="flex items-center text-sm font-medium text-gray-700 hover:text-red-700 transition-colors py-2">
+                <Link 
+                  to={item.path} 
+                  className="flex items-center text-sm font-medium text-gray-700 hover:text-red-700 transition-colors py-2"
+                >
                   {item.name}
                   {item.hasDropdown && <ChevronDown className="ml-1 w-4 h-4" />}
-                </button>
+                </Link>
                 {item.hasDropdown && (
                   <div className="absolute left-0 mt-0 w-64 bg-white shadow-xl rounded-b-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border-t-2 border-red-600">
                     <div className="py-2">
                       {item.subItems?.map((subItem) => (
-                        <a key={subItem} href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700">
-                          {subItem}
-                        </a>
+                        <Link 
+                          key={subItem.name} 
+                          to={subItem.path} 
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700"
+                        >
+                          {subItem.name}
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -106,22 +116,24 @@ const Header = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <div key={item.name}>
-                <a
-                  href="#"
+                <Link
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-700 hover:bg-gray-50"
                 >
                   {item.name}
-                </a>
+                </Link>
                 {item.hasDropdown && (
                   <div className="pl-6 space-y-1">
                     {item.subItems?.map((subItem) => (
-                      <a
-                        key={subItem}
-                        href="#"
+                      <Link
+                        key={subItem.name}
+                        to={subItem.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
                         className="block px-3 py-1.5 rounded-md text-sm font-medium text-gray-500 hover:text-red-700 hover:bg-gray-50"
                       >
-                        {subItem}
-                      </a>
+                        {subItem.name}
+                      </Link>
                     ))}
                   </div>
                 )}
