@@ -2,7 +2,7 @@ name: AI Studio Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main", "master"] # Chạy khi có code mới đẩy lên nhánh main hoặc master
+    branches: ["deploy-git-page"]
   workflow_dispatch:
 
 permissions:
