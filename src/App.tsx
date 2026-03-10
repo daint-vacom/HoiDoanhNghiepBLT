@@ -21,16 +21,16 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="hoi-vien" element={<MembersPage />} />
+          <Route path="/hoi-vien" element={<MembersPage />} />
           
-          <Route path="tin-tuc">
+          <Route path="/tin-tuc">
             <Route index element={<NewsPage />} />
             <Route path="hoat-dong" element={<NewsPage />} />
             <Route path="giao-thuong" element={<NewsPage />} />
             <Route path="doi-tac" element={<NewsPage />} />
           </Route>
 
-          <Route path="gioi-thieu">
+          <Route path="/gioi-thieu">
             <Route index element={<AboutPage />} />
             <Route path="bltba" element={<AboutPage />} />
             <Route path="ban-chap-hanh" element={<PlaceholderPage title="Ban chấp hành" />} />
@@ -38,7 +38,7 @@ export default function App() {
             <Route path="dieu-le" element={<PlaceholderPage title="Điều lệ hội" />} />
           </Route>
 
-          <Route path="lien-he" element={<ContactPage />} />
+          <Route path="/lien-he" element={<ContactPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
