@@ -3,11 +3,11 @@ import { motion } from 'motion/react';
 
 const Stats = () => {
   const stats = [
-    { label: 'Hội viên', value: '500+' },
+    { label: 'Hội viên sáng lập', value: '102' },
     { label: 'Năm hoạt động', value: '15' },
     { label: 'Chương trình/ tháng', value: '12' },
     { label: 'Hội thảo, sự kiện/ năm', value: '40' },
-    { label: 'Người tham gia sự kiện/ năm', value: '5000+' },
+    { label: 'Thăm hội viên', value: '15+' },
   ];
 
   const containerVariants = {

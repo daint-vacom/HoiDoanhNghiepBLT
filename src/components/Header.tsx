@@ -15,6 +15,16 @@ const Header = () => {
   }, []);
 
   const navItems = [
+        { 
+      name: 'Giới thiệu', 
+      path: '/gioi-thieu',
+      hasDropdown: true,
+      subItems: [
+        { name: 'Giới thiệu về hội doanh nghiệp BLTBA', path: '/gioi-thieu/bltba' },
+        { name: 'Ban chấp hành', path: '/gioi-thieu/ban-chap-hanh' },
+        { name: 'Điều lệ hội', path: '/gioi-thieu/dieu-le' }
+      ]
+    },
     { name: 'Hội viên', path: '/hoi-vien', hasDropdown: false },
     { 
       name: 'Tin tức', 
@@ -24,17 +34,6 @@ const Header = () => {
         { name: 'Tin hoạt động hội', path: '/tin-tuc/hoat-dong' },
         { name: 'Tin giao thương', path: '/tin-tuc/giao-thuong' },
         { name: 'Tin hội viên đối tác', path: '/tin-tuc/doi-tac' }
-      ]
-    },
-    { 
-      name: 'Giới thiệu', 
-      path: '/gioi-thieu',
-      hasDropdown: true,
-      subItems: [
-        { name: 'Giới thiệu về hội doanh nghiệp BLTBA', path: '/gioi-thieu/bltba' },
-        { name: 'Ban chấp hành', path: '/gioi-thieu/ban-chap-hanh' },
-        { name: 'Văn phòng BLTBA', path: '/gioi-thieu/van-phong' },
-        { name: 'Điều lệ hội', path: '/gioi-thieu/dieu-le' }
       ]
     },
     { name: 'Liên hệ', path: '/lien-he', hasDropdown: false },

@@ -203,7 +203,7 @@ const MembersPage = () => {
               </div>
               
               <div className="text-4xl font-extrabold text-white mb-8 border-b border-white/10 pb-8">
-                5.000.000<span className="text-lg text-gray-400 font-normal ml-1">VNĐ</span>
+                1.000.000<span className="text-lg text-gray-400 font-normal ml-1">VNĐ</span>
               </div>
               
               <ul className="text-left space-y-4 mb-8 flex-grow">
@@ -221,9 +221,6 @@ const MembersPage = () => {
               transition={{ delay: 0.2 }}
               className="bg-gradient-to-br from-red-900 to-red-950 rounded-2xl p-8 border border-red-800 shadow-2xl relative overflow-hidden flex flex-col group"
             >
-              <div className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-lg uppercase tracking-wider shadow-md z-10">
-                Phổ biến
-              </div>
               
               <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-red-600/30 rounded-full blur-3xl group-hover:bg-red-600/40 transition-colors"></div>
               
@@ -238,7 +235,7 @@ const MembersPage = () => {
               </div>
               
               <div className="text-4xl font-extrabold text-white mb-8 border-b border-red-800/50 pb-8 relative z-10">
-                10.000.000<span className="text-lg text-red-200 font-normal ml-1">VNĐ/năm</span>
+                2.000.000<span className="text-lg text-red-200 font-normal ml-1">VNĐ/năm</span>
               </div>
               
               <ul className="text-left space-y-4 mb-8 flex-grow relative z-10">
