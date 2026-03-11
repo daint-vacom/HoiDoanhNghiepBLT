@@ -8,6 +8,7 @@ interface Member {
   logo: string;
   industry: string;
   industryEn: string;
+  description: string;
   productTypes: string[];
   mainMaterials: string[];
   website?: string;
@@ -23,6 +24,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/landco/200/200',
     industry: 'Chế biến Gỗ',
     industryEn: 'Wood processing',
+    description: 'LANDCO là đơn vị hàng đầu trong lĩnh vực sản xuất và thi công nội thất cao cấp, chuyên cung cấp các giải pháp toàn diện cho không gian sống và làm việc chuyên nghiệp.',
     productTypes: ['Gỗ nguyên liệu', 'Ván / Wood material', 'Panels', 'Máy móc', 'Thiết bị / Machinery', 'Equipment', 'Tools', 'Phụ kiện', 'Vật tư / Hardware'],
     mainMaterials: ['Tràm / Acacia', 'Cao su / Rubber wood', 'Tuyết tùng / Cedar', 'Giá tỵ (Gỗ Tếch hoặc gỗ Sao) / Teak', 'Óc chó / Walnut', 'Sồi / Oak'],
     website: 'https://landco.vn',
@@ -36,6 +38,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/ancuong/200/200',
     industry: 'Vật liệu nội thất',
     industryEn: 'Interior materials',
+    description: 'An Cường là nhà sản xuất cung cấp nguyên vật liệu trang trí nội thất và vật liệu décor hàng đầu tại Việt Nam và khu vực Đông Nam Á.',
     productTypes: ['Ván MFC', 'Ván Laminate', 'Ván Acrylic', 'Cửa gỗ công nghiệp', 'Sàn gỗ'],
     mainMaterials: ['MDF', 'HDF', 'Gỗ dán / Plywood'],
     website: 'https://ancuong.com',
@@ -49,6 +52,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/minhlong/200/200',
     industry: 'Vật liệu trang trí',
     industryEn: 'Decorative materials',
+    description: 'Minh Long chuyên cung cấp các loại vật liệu gỗ công nghiệp, tấm vật liệu phủ Melamine, Laminate, Acrylic phục vụ cho ngành sản xuất nội thất hiện đại.',
     productTypes: ['Tấm vật liệu phủ Melamine', 'Laminate', 'Acrylic', 'Ván dăm', 'Ván sợi'],
     mainMaterials: ['Gỗ cao su', 'Gỗ tràm', 'Gỗ thông'],
     website: 'https://gominhlong.com',
@@ -62,6 +66,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/delta/200/200',
     industry: 'Xây dựng & Nội thất',
     industryEn: 'Construction & Interior',
+    description: 'Delta là tổng thầu xây dựng và thi công nội thất uy tín, với nhiều năm kinh nghiệm trong các dự án dân dụng, công nghiệp và hạ tầng quy mô lớn.',
     productTypes: ['Thi công nội thất', 'Xây dựng dân dụng', 'Tư vấn thiết kế'],
     mainMaterials: ['Gỗ tự nhiên', 'Gỗ công nghiệp', 'Kim loại', 'Kính'],
     website: 'https://deltacorp.vn',
@@ -163,7 +168,7 @@ const MemberSearchPage = () => {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredMembers.map((member, index) => (
                 <motion.div
@@ -172,67 +177,58 @@ const MemberSearchPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: index % 6 * 0.05 }}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex flex-col group"
+                  transition={{ duration: 0.4, delay: index % 4 * 0.05 }}
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex group cursor-pointer"
                 >
-                  {/* Logo Section */}
-                  <div className="relative h-48 overflow-hidden bg-gray-50">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                    <img 
-                      src={member.logo} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute top-3 left-3 z-20">
-                      <span className="bg-red-700 text-white px-2 py-1 rounded text-[9px] font-bold uppercase tracking-wider shadow-sm">
-                        {member.industry}
-                      </span>
+                  {/* Logo Section - Left Side */}
+                  <div className="w-32 sm:w-40 flex-shrink-0 bg-gray-50 flex items-center justify-center p-4">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-white p-2 shadow-inner border border-gray-100">
+                      <img 
+                        src={member.logo} 
+                        alt={member.name} 
+                        className="w-full h-full object-contain"
+                        referrerPolicy="no-referrer"
+                      />
                     </div>
                   </div>
 
-                  {/* Content Section */}
-                  <div className="p-6 flex-grow flex flex-col">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-red-700 transition-colors line-clamp-2 min-h-[3.5rem] leading-tight">
-                      {member.name}
-                    </h3>
+                  {/* Content Section - Right Side */}
+                  <div className="p-5 sm:p-6 flex-grow flex flex-col min-w-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-red-700 transition-colors line-clamp-1 leading-tight">
+                        {member.name}
+                      </h3>
+                      <span className="hidden sm:block bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                        {member.industry}
+                      </span>
+                    </div>
+                    
+                    <p className="text-gray-500 text-xs sm:text-sm mb-3 line-clamp-3 leading-relaxed">
+                      {member.description}
+                    </p>
 
-                    <div className="space-y-4 mb-6 flex-grow">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 bg-red-50 text-red-600 p-0.5 rounded">
-                          <CheckSquare className="w-3 h-3" />
-                        </div>
-                        <div className="text-xs leading-relaxed">
-                          <span className="font-bold text-gray-900">Sản phẩm:</span>{' '}
-                          <span className="text-gray-600 line-clamp-2">{member.productTypes.join('; ')}</span>
-                        </div>
+                    <div className="flex flex-wrap gap-x-4 gap-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Globe className="w-3.5 h-3.5 text-red-600" />
+                        <span className="text-[11px] sm:text-xs font-medium truncate max-w-[120px]">
+                          {member.website?.replace('https://', '') || 'Đang cập nhật'}
+                        </span>
                       </div>
-
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1 bg-red-50 text-red-600 p-0.5 rounded">
-                          <CheckSquare className="w-3 h-3" />
-                        </div>
-                        <div className="text-xs leading-relaxed">
-                          <span className="font-bold text-gray-900">Nguyên liệu:</span>{' '}
-                          <span className="text-gray-600 line-clamp-2">{member.mainMaterials.join('; ')}</span>
-                        </div>
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Phone className="w-3.5 h-3.5 text-red-600" />
+                        <span className="text-[11px] sm:text-xs font-medium">
+                          {member.phone || 'Đang cập nhật'}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Contact Info */}
-                    <div className="pt-4 border-t border-gray-100 grid grid-cols-2 gap-4">
-                      {member.website && (
-                        <a href={member.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[10px] text-gray-500 hover:text-red-700 transition-colors">
-                          <Globe className="w-3.5 h-3.5" />
-                          <span className="truncate">{member.website.replace('https://', '')}</span>
-                        </a>
-                      )}
-                      {member.email && (
-                        <a href={`mailto:${member.email}`} className="flex items-center gap-2 text-[10px] text-gray-500 hover:text-red-700 transition-colors">
-                          <Mail className="w-3.5 h-3.5" />
-                          <span className="truncate">{member.email}</span>
-                        </a>
-                      )}
+                    <div className="mt-auto pt-3 border-t border-gray-50 flex items-center justify-end">
+                      <span className="text-red-700 font-bold text-[11px] sm:text-xs group-hover:translate-x-1 transition-transform inline-flex items-center">
+                        Chi tiết
+                        <svg className="w-3 h-3 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
                     </div>
                   </div>
                 </motion.div>
