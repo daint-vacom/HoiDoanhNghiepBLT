@@ -64,25 +64,25 @@ const AboutPage = () => {
       </section>
 
       {/* 5 Sứ mệnh Section */}
-      <section className="py-24 bg-gray-50 overflow-hidden">
+      <section className="py-12 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center justify-center space-x-2 mb-4"
+              className="inline-flex items-center justify-center space-x-2 mb-2"
             >
+              <Star className="text-amber-500 w-3 h-3" fill="currentColor" />
               <Star className="text-amber-500 w-5 h-5" fill="currentColor" />
-              <Star className="text-amber-500 w-8 h-8" fill="currentColor" />
-              <Star className="text-amber-500 w-5 h-5" fill="currentColor" />
+              <Star className="text-amber-500 w-3 h-3" fill="currentColor" />
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl font-extrabold text-red-800 uppercase tracking-tight"
+              className="text-2xl md:text-3xl font-extrabold text-red-800 uppercase tracking-tight"
             >
               5 Sứ mệnh cốt lõi
             </motion.h2>
@@ -91,28 +91,28 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, scaleX: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="h-1 w-24 bg-amber-500 mx-auto mt-6"
+              className="h-1 w-12 bg-amber-500 mx-auto mt-3"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Mission 1 - Large Card */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group lg:col-span-2 relative overflow-hidden"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group lg:col-span-2 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-40 h-40 bg-red-50 rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110 z-0" />
+              <div className="absolute top-0 right-0 w-28 h-28 bg-red-50 rounded-bl-full -mr-6 -mt-6 transition-transform duration-500 group-hover:scale-110 z-0" />
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                  <div className="w-14 h-14 bg-red-100 text-red-700 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                    <TrendingUp size={28} />
+                  <div className="w-10 h-10 bg-red-100 text-red-700 rounded-xl flex items-center justify-center mb-3 shadow-inner">
+                    <TrendingUp size={20} />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-red-700 transition-colors">Đưa cộng đồng doanh nghiệp phát triển vững mạnh</h3>
-                  <p className="text-gray-600 text-base leading-relaxed max-w-2xl">Trong đó sự đóng góp về giá trị sản xuất, xuất khẩu của các Doanh nghiệp chiếm tỷ trọng cao bằng những sản phẩm có giá trị gia tăng cao.</p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-red-700 transition-colors">Đưa cộng đồng doanh nghiệp phát triển vững mạnh</h3>
+                  <p className="text-gray-600 text-xs leading-relaxed max-w-2xl">Trong đó sự đóng góp về giá trị sản xuất, xuất khẩu của các Doanh nghiệp chiếm tỷ trọng cao bằng những sản phẩm có giá trị gia tăng cao.</p>
                 </div>
-                <div className="text-9xl font-black text-gray-50 absolute bottom-[-20px] right-4 select-none z-[-1]">01</div>
+                <div className="text-6xl font-black text-gray-50 absolute bottom-[-5px] right-4 select-none z-[-1]">01</div>
               </div>
             </motion.div>
 
@@ -122,17 +122,17 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110 z-0" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-amber-50 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-110 z-0" />
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                  <Target size={24} />
+                <div className="w-9 h-9 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-3 shadow-inner">
+                  <Target size={18} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-700 transition-colors">Nâng cao năng lực cạnh tranh</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">Đào tạo, phát triển nguồn nhân lực kỹ thuật giúp nâng cao giá trị, chất lượng và khả năng cạnh tranh của doanh nghiệp; Chuyển đổi từ sản xuất gia công sang phát triển sản phẩm có thiết kế.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-amber-700 transition-colors">Nâng cao năng lực cạnh tranh</h3>
+                <p className="text-gray-600 text-xs leading-relaxed">Đào tạo, phát triển nguồn nhân lực kỹ thuật giúp nâng cao giá trị, chất lượng và khả năng cạnh tranh của doanh nghiệp; Chuyển đổi từ sản xuất gia công sang phát triển sản phẩm có thiết kế.</p>
               </div>
-              <div className="text-8xl font-black text-gray-50 absolute bottom-[-10px] right-4 select-none z-0">02</div>
+              <div className="text-5xl font-black text-gray-50 absolute bottom-[-5px] right-4 select-none z-0">02</div>
             </motion.div>
 
             {/* Mission 3 */}
@@ -141,17 +141,17 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110 z-0" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-50 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-110 z-0" />
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                  <Leaf size={24} />
+                <div className="w-9 h-9 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-3 shadow-inner">
+                  <Leaf size={18} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors">Hướng đến Xanh - Sạch - Số</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">Đưa ngành Doanh nghiệp đi đầu trong xu hướng Xanh - Sạch - Số trong chuỗi giá trị từ Nguyên liệu - Thiết kế - Sản xuất - Thương mại - Quản trị.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-emerald-700 transition-colors">Hướng đến Xanh - Sạch - Số</h3>
+                <p className="text-gray-600 text-xs leading-relaxed">Đưa ngành Doanh nghiệp đi đầu trong xu hướng Xanh - Sạch - Số trong chuỗi giá trị từ Nguyên liệu - Thiết kế - Sản xuất - Thương mại - Quản trị.</p>
               </div>
-              <div className="text-8xl font-black text-gray-50 absolute bottom-[-10px] right-4 select-none z-0">03</div>
+              <div className="text-5xl font-black text-gray-50 absolute bottom-[-5px] right-4 select-none z-0">03</div>
             </motion.div>
 
             {/* Mission 4 */}
@@ -160,17 +160,17 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110 z-0" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-110 z-0" />
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                  <Users size={24} />
+                <div className="w-9 h-9 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center mb-3 shadow-inner">
+                  <Users size={18} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">Phát triển và Kế thừa</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">Bồi dưỡng, phát triển và chuyển giao thế hệ kế thừa để những nền tảng vững chắc từ thế hệ trước được tiếp bước và phát triển qua các thế hệ sau.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-700 transition-colors">Phát triển và Kế thừa</h3>
+                <p className="text-gray-600 text-xs leading-relaxed">Bồi dưỡng, phát triển và chuyển giao thế hệ kế thừa để những nền tảng vững chắc từ thế hệ trước được tiếp bước và phát triển qua các thế hệ sau.</p>
               </div>
-              <div className="text-8xl font-black text-gray-50 absolute bottom-[-10px] right-4 select-none z-0">04</div>
+              <div className="text-5xl font-black text-gray-50 absolute bottom-[-5px] right-4 select-none z-0">04</div>
             </motion.div>
 
             {/* Mission 5 */}
@@ -179,17 +179,17 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
+              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110 z-0" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-110 z-0" />
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                  <LinkIcon size={24} />
+                <div className="w-9 h-9 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center mb-3 shadow-inner">
+                  <LinkIcon size={18} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-700 transition-colors">Gắn kết cộng đồng</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">Xây dựng mối quan hệ hiệp nhất giữa các doanh nghiệp hội viên, giữa hội viên với các tổ chức và cơ quan quản lý Nhà nước. Xây dựng cộng đồng phát triển với trách nhiệm xã hội.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors">Gắn kết cộng đồng</h3>
+                <p className="text-gray-600 text-xs leading-relaxed">Xây dựng mối quan hệ hiệp nhất giữa các doanh nghiệp hội viên, giữa hội viên với các tổ chức và cơ quan quản lý Nhà nước. Xây dựng cộng đồng phát triển với trách nhiệm xã hội.</p>
               </div>
-              <div className="text-8xl font-black text-gray-50 absolute bottom-[-10px] right-4 select-none z-0">05</div>
+              <div className="text-5xl font-black text-gray-50 absolute bottom-[-5px] right-4 select-none z-0">05</div>
             </motion.div>
           </div>
         </div>

@@ -25,7 +25,15 @@ const Header = () => {
         { name: 'Điều lệ hội', path: '/gioi-thieu/dieu-le' }
       ]
     },
-    { name: 'Hội viên', path: '/hoi-vien', hasDropdown: false },
+    { 
+      name: 'Hội viên', 
+      path: '/hoi-vien', 
+      hasDropdown: true,
+      subItems: [
+        { name: 'Đăng ký hội viên', path: '/hoi-vien' },
+        { name: 'Tra cứu hội viên', path: '/hoi-vien/tra-cuu' }
+      ]
+    },
     { 
       name: 'Tin tức', 
       path: '/tin-tuc',

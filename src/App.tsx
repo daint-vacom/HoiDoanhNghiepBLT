@@ -6,6 +6,7 @@ import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import MembersPage from './pages/MembersPage';
+import MemberSearchPage from './pages/MemberSearchPage';
 
 // Placeholder components for other pages
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -21,7 +22,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/hoi-vien" element={<MembersPage />} />
+          <Route path="/hoi-vien">
+            <Route index element={<MembersPage />} />
+            <Route path="tra-cuu" element={<MemberSearchPage />} />
+          </Route>
           
           <Route path="/tin-tuc">
             <Route index element={<NewsPage />} />
