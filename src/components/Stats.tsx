@@ -25,14 +25,14 @@ const Stats = () => {
   };
 
   return (
-    <section className="bg-white py-12 border-b border-gray-100 overflow-hidden">
+    <section className="bg-gray-50 py-16 border-b border-gray-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
-          className="grid grid-cols-2 md:grid-cols-5 gap-8"
+          className="grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {stats.map((stat, index) => (
             <motion.div
