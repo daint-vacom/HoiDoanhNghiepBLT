@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Menu, X, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/png.logo/logo.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,7 +59,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center">
             <div className="flex items-center space-x-3">
-              <img src="/logo.png" alt="BLTBA Logo" className="h-12 w-auto" />
+              <img src={logo} alt="BLTBA Logo" className="h-12 w-auto" />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold text-red-700 tracking-tighter">BLTBA</span>
                 <span className="text-[8px] uppercase font-semibold text-amber-600 leading-none">Bình Lợi Trung Business Association</span>

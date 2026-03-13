@@ -33,7 +33,7 @@ const Home = () => {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-red-900/40 flex items-center justify-center">
-                <span className="text-white text-2xl font-bold uppercase tracking-widest border-2 border-white px-6 py-2">Hợp tác đầu tư 2026</span>
+                <span className="text-white text-2xl font-bold uppercase tracking-widest border-2 border-white px-6 py-2">Ban xây dựng</span>
               </div>
             </div>
             <div className="relative h-48 rounded-lg overflow-hidden group cursor-pointer">
@@ -44,7 +44,7 @@ const Home = () => {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-red-900/40 flex items-center justify-center">
-                <span className="text-white text-2xl font-bold uppercase tracking-widest border-2 border-white px-6 py-2">Xúc tiến thương mại</span>
+                <span className="text-white text-2xl font-bold uppercase tracking-widest border-2 border-white px-6 py-2">Ban thương mại dịch vụ</span>
               </div>
             </div>
           </motion.div>
