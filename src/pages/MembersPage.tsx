@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CheckCircle2, FileText, CreditCard, UserPlus, ShieldCheck, TrendingUp, Users, Globe, Briefcase, Building2 } from 'lucide-react';
+import { CheckCircle2, FileText, CreditCard, UserPlus, ShieldCheck, TrendingUp, Users, Globe, Briefcase, Building2, ArrowRight } from 'lucide-react';
 
 const MembersPage = () => {
   const location = useLocation();
@@ -109,6 +109,92 @@ const MembersPage = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Các Ban Chuyên Môn Section */}
+      <section className="pt-20 pb-0 bg-white overflow-hidden">
+        <div className="flex flex-col">
+          {[
+            {
+              name: "Ban Xây dựng",
+              desc: "Quy tụ các doanh nghiệp trong lĩnh vực xây dựng, kiến trúc, nội thất và vật liệu xây dựng. Cùng nhau kiến tạo những công trình chất lượng và bền vững, đóng góp vào sự phát triển hạ tầng đô thị.",
+              count: "320+",
+              image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+              color: "from-slate-950",
+              accent: "text-blue-400",
+              bgAccent: "bg-blue-500/10"
+            },
+            {
+              name: "Ban Thương mại Dịch vụ",
+              desc: "Nơi kết nối các doanh nghiệp hoạt động trong lĩnh vực logistics, tài chính, truyền thông, du lịch và công nghệ. Thúc đẩy giao thương, chuyển đổi số và đổi mới sáng tạo trong kinh doanh.",
+              count: "280+",
+              image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop",
+              color: "from-emerald-950",
+              accent: "text-emerald-400",
+              bgAccent: "bg-emerald-500/10"
+            }
+          ].map((board, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1 }}
+              className="relative min-h-[500px] flex items-center overflow-hidden group"
+            >
+              {/* Background Image */}
+              <img
+                src={board.image}
+                alt={board.name}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Gradient Overlay */}
+              <div className={`absolute inset-0 bg-gradient-to-t ${index % 2 === 0 ? 'md:bg-gradient-to-r' : 'md:bg-gradient-to-l'} ${board.color} via-black/50 to-transparent opacity-95`}></div>
+
+              {/* Content Container */}
+              <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className={`max-w-2xl ${index % 2 === 0 ? 'mr-auto' : 'ml-auto text-right items-end flex flex-col'}`}>
+                  <motion.div 
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="space-y-6"
+                  >
+                    <h3 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
+                      {board.name}
+                    </h3>
+                    
+                    <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
+                      {board.desc}
+                    </p>
+                    
+                    <div className={`flex items-center gap-6 ${index % 2 === 0 ? '' : 'flex-row-reverse'}`}>
+                      <div className={`${board.bgAccent} backdrop-blur-md px-8 py-4 rounded-2xl border border-white/10`}>
+                        <div className={`text-3xl font-black ${board.accent}`}>{board.count}</div>
+                        <div className="text-[10px] font-bold text-white/60 uppercase tracking-wider">Hội viên</div>
+                      </div>
+                      
+                      <button className={`group ${board.accent} font-bold flex items-center hover:brightness-125 transition-all text-lg`}>
+                        {index % 2 === 0 ? (
+                          <>
+                            Tìm hiểu thêm <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                          </>
+                        ) : (
+                          <>
+                            <ArrowRight className="mr-2 w-6 h-6 rotate-180 group-hover:-translate-x-2 transition-transform" /> Tìm hiểu thêm
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
