@@ -267,15 +267,13 @@ const MemberSearchPage = () => {
                   </div>
 
                   {/* Logo Section - Left Side */}
-                  <div className="w-32 sm:w-40 flex-shrink-0 bg-gray-50 flex items-center justify-center p-4">
-                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-white p-1 shadow-inner">
-                      <img 
-                        src={member.logo} 
-                        alt={member.name} 
-                        className="w-full h-full object-contain"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
+                  <div className="w-32 sm:w-40 aspect-square flex-shrink-0 bg-gray-50 flex items-center justify-center p-2">
+                    <img 
+                      src={member.logo} 
+                      alt={member.name} 
+                      className="w-full h-full object-contain"
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
 
                   {/* Content Section - Right Side */}
