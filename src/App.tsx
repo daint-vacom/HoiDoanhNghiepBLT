@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import NewsPage from "./pages/NewsPage";
 import AboutPage from "./pages/AboutPage";
@@ -20,6 +21,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
