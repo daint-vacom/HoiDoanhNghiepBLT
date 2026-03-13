@@ -8,6 +8,7 @@ interface Member {
   logo: string;
   industry: string;
   industryEn: string;
+  board: 'Ban Xây dựng' | 'Ban Thương mại Dịch vụ';
   description: string;
   productTypes: string[];
   mainMaterials: string[];
@@ -24,6 +25,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/landco/200/200',
     industry: 'Chế biến Gỗ',
     industryEn: 'Wood processing',
+    board: 'Ban Xây dựng',
     description: 'LANDCO là đơn vị hàng đầu trong lĩnh vực sản xuất và thi công nội thất cao cấp, chuyên cung cấp các giải pháp toàn diện cho không gian sống và làm việc chuyên nghiệp.',
     productTypes: ['Gỗ nguyên liệu', 'Ván / Wood material', 'Panels', 'Máy móc', 'Thiết bị / Machinery', 'Equipment', 'Tools', 'Phụ kiện', 'Vật tư / Hardware'],
     mainMaterials: ['Tràm / Acacia', 'Cao su / Rubber wood', 'Tuyết tùng / Cedar', 'Giá tỵ (Gỗ Tếch hoặc gỗ Sao) / Teak', 'Óc chó / Walnut', 'Sồi / Oak'],
@@ -38,6 +40,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/ancuong/200/200',
     industry: 'Vật liệu nội thất',
     industryEn: 'Interior materials',
+    board: 'Ban Xây dựng',
     description: 'An Cường là nhà sản xuất cung cấp nguyên vật liệu trang trí nội thất và vật liệu décor hàng đầu tại Việt Nam và khu vực Đông Nam Á.',
     productTypes: ['Ván MFC', 'Ván Laminate', 'Ván Acrylic', 'Cửa gỗ công nghiệp', 'Sàn gỗ'],
     mainMaterials: ['MDF', 'HDF', 'Gỗ dán / Plywood'],
@@ -52,6 +55,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/minhlong/200/200',
     industry: 'Vật liệu trang trí',
     industryEn: 'Decorative materials',
+    board: 'Ban Xây dựng',
     description: 'Minh Long chuyên cung cấp các loại vật liệu gỗ công nghiệp, tấm vật liệu phủ Melamine, Laminate, Acrylic phục vụ cho ngành sản xuất nội thất hiện đại.',
     productTypes: ['Tấm vật liệu phủ Melamine', 'Laminate', 'Acrylic', 'Ván dăm', 'Ván sợi'],
     mainMaterials: ['Gỗ cao su', 'Gỗ tràm', 'Gỗ thông'],
@@ -66,6 +70,7 @@ const membersData: Member[] = [
     logo: 'https://picsum.photos/seed/delta/200/200',
     industry: 'Xây dựng & Nội thất',
     industryEn: 'Construction & Interior',
+    board: 'Ban Xây dựng',
     description: 'Delta là tổng thầu xây dựng và thi công nội thất uy tín, với nhiều năm kinh nghiệm trong các dự án dân dụng, công nghiệp và hạ tầng quy mô lớn.',
     productTypes: ['Thi công nội thất', 'Xây dựng dân dụng', 'Tư vấn thiết kế'],
     mainMaterials: ['Gỗ tự nhiên', 'Gỗ công nghiệp', 'Kim loại', 'Kính'],
@@ -76,24 +81,53 @@ const membersData: Member[] = [
   }
 ];
 
+const boards = [
+  {
+    id: 'construction',
+    name: 'Ban Xây dựng',
+    industries: ['Chế biến Gỗ', 'Vật liệu nội thất', 'Vật liệu trang trí', 'Xây dựng & Nội thất', 'Kiến trúc', 'Cơ điện']
+  },
+  {
+    id: 'trade',
+    name: 'Ban Thương mại Dịch vụ',
+    industries: ['Logistics', 'Tài chính', 'Truyền thông', 'Du lịch', 'Ẩm thực', 'Y tế', 'Công nghệ thông tin']
+  }
+];
+
 const MemberSearchPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('Tất cả');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [openAccordion, setOpenAccordion] = useState<string | null>('construction');
 
-  const industries = useMemo(() => {
-    const unique = Array.from(new Set(membersData.map(m => m.industry)));
-    return ['Tất cả', ...unique];
-  }, []);
+  const toggleIndustry = (industry: string) => {
+    setSelectedIndustries(prev => 
+      prev.includes(industry) 
+        ? prev.filter(i => i !== industry)
+        : [...prev, industry]
+    );
+  };
+
+  const toggleBoardAll = (boardIndustries: string[]) => {
+    const allSelected = boardIndustries.every(ind => selectedIndustries.includes(ind));
+    if (allSelected) {
+      // Remove all industries of this board
+      setSelectedIndustries(prev => prev.filter(ind => !boardIndustries.includes(ind)));
+    } else {
+      // Add all industries of this board that are not already selected
+      const newIndustries = boardIndustries.filter(ind => !selectedIndustries.includes(ind));
+      setSelectedIndustries(prev => [...prev, ...newIndustries]);
+    }
+  };
 
   const filteredMembers = useMemo(() => {
     return membersData.filter(member => {
       const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          member.productTypes.some(pt => pt.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesIndustry = selectedIndustry === 'Tất cả' || member.industry === selectedIndustry;
+                          member.productTypes.some(pt => pt.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                          member.industry.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesIndustry = selectedIndustries.length === 0 || selectedIndustries.includes(member.industry);
       return matchesSearch && matchesIndustry;
     });
-  }, [searchTerm, selectedIndustry]);
+  }, [searchTerm, selectedIndustries]);
 
   return (
     <div className="pt-24 min-h-screen bg-gray-50">
@@ -123,37 +157,84 @@ const MemberSearchPage = () => {
       </section>
 
       {/* Search & Filter Bar */}
-      <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center">
-            {/* Search Input */}
-            <div className="relative flex-grow border-b lg:border-b-0 lg:border-r border-gray-100">
-              <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input 
-                type="text" 
-                placeholder="Tìm tên công ty, sản phẩm..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-4 py-6 bg-transparent focus:outline-none font-medium text-gray-700"
-              />
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Search Input - Full Width */}
+          <div className="relative mb-8">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6" />
+            <input 
+              type="text" 
+              placeholder="Tìm tên công ty, sản phẩm, ngành nghề..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-14 pr-6 py-5 bg-gray-50 rounded-2xl border border-gray-200 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all outline-none text-lg font-medium text-gray-700 shadow-sm"
+            />
+          </div>
+          
+          {/* Accordion Filters */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-gray-900 font-bold mb-4">
+              <Filter className="w-5 h-5 text-red-700" />
+              <span>Lọc theo Ban & Ngành nghề</span>
             </div>
-            
-            {/* Category Filters */}
-            <div className="flex overflow-x-auto no-scrollbar py-4 lg:py-0 lg:pl-8 gap-3">
-              {industries.map(industry => (
+
+            {boards.map((board) => (
+              <div key={board.id} className="border border-gray-100 rounded-xl overflow-hidden bg-white shadow-sm">
                 <button
-                  key={industry}
-                  onClick={() => setSelectedIndustry(industry)}
-                  className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all border ${
-                    selectedIndustry === industry 
-                      ? 'bg-red-50 text-red-700 border-red-200 shadow-sm' 
-                      : 'bg-white text-gray-600 border-gray-200 hover:text-red-700 hover:bg-gray-50 hover:border-gray-300'
-                  }`}
+                  onClick={() => setOpenAccordion(openAccordion === board.id ? null : board.id)}
+                  className="w-full flex items-center justify-between p-4 bg-gray-50/50 hover:bg-gray-50 transition-colors"
                 >
-                  {industry}
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-red-700"></div>
+                    <span className="font-bold text-gray-900 uppercase tracking-wide text-sm">{board.name}</span>
+                    <span className="text-xs text-gray-500 font-medium bg-gray-200 px-2 py-0.5 rounded-full">
+                      {board.industries.filter(ind => selectedIndustries.includes(ind)).length} / {board.industries.length}
+                    </span>
+                  </div>
+                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${openAccordion === board.id ? 'rotate-180' : ''}`} />
                 </button>
-              ))}
-            </div>
+
+                <AnimatePresence>
+                  {openAccordion === board.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-4 flex flex-wrap gap-2 border-t border-gray-100">
+                        {/* "Tất cả" badge for this board */}
+                        <button
+                          onClick={() => toggleBoardAll(board.industries)}
+                          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                            board.industries.every(ind => selectedIndustries.includes(ind))
+                              ? 'bg-red-700 text-white border-red-700'
+                              : 'bg-white text-gray-600 border-gray-200 hover:border-red-300'
+                          }`}
+                        >
+                          Tất cả
+                        </button>
+                        
+                        {board.industries.map(industry => (
+                          <button
+                            key={industry}
+                            onClick={() => toggleIndustry(industry)}
+                            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                              selectedIndustries.includes(industry)
+                                ? 'bg-red-50 text-red-700 border-red-200 shadow-sm'
+                                : 'bg-white text-gray-500 border-gray-200 hover:text-red-700 hover:bg-gray-50 hover:border-gray-300'
+                            }`}
+                          >
+                            {industry}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -178,11 +259,16 @@ const MemberSearchPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: index % 4 * 0.05 }}
-                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex group cursor-pointer"
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex group cursor-pointer relative"
                 >
+                  {/* Board Banner */}
+                  <div className="absolute top-0 left-0 bg-amber-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-br-lg z-10 shadow-sm uppercase tracking-wider">
+                    {member.board}
+                  </div>
+
                   {/* Logo Section - Left Side */}
                   <div className="w-32 sm:w-40 flex-shrink-0 bg-gray-50 flex items-center justify-center p-4">
-                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-white p-2 shadow-inner border border-gray-100">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-white p-1 shadow-inner">
                       <img 
                         src={member.logo} 
                         alt={member.name} 
@@ -194,11 +280,14 @@ const MemberSearchPage = () => {
 
                   {/* Content Section - Right Side */}
                   <div className="p-5 sm:p-6 flex-grow flex flex-col min-w-0">
-                    <div className="flex items-start justify-between mb-2">
+                    <div className="mb-1">
                       <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-red-700 transition-colors line-clamp-1 leading-tight">
                         {member.name}
                       </h3>
-                      <span className="hidden sm:block bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                    </div>
+                    
+                    <div className="mb-3">
+                      <span className="inline-block bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
                         {member.industry}
                       </span>
                     </div>
@@ -241,7 +330,7 @@ const MemberSearchPage = () => {
                 <h3 className="text-xl font-bold text-gray-500">Không tìm thấy hội viên nào</h3>
                 <p className="text-gray-400">Vui lòng thử lại với từ khóa khác hoặc thay đổi bộ lọc.</p>
                 <button 
-                  onClick={() => { setSearchTerm(''); setSelectedIndustry('Tất cả'); }}
+                  onClick={() => { setSearchTerm(''); setSelectedIndustries([]); }}
                   className="mt-6 text-red-700 font-semibold hover:underline"
                 >
                   Xóa tất cả bộ lọc
