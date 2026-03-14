@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import Hero from "../components/Hero";
 import Stats from "../components/Stats";
@@ -25,7 +26,10 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
-            <div className="relative h-48 rounded-lg overflow-hidden group cursor-pointer">
+            <Link
+              to="/hoi-vien/tra-cuu?board=construction"
+              className="relative h-48 rounded-lg overflow-hidden group cursor-pointer"
+            >
               <img
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop"
                 alt="Banner 1"
@@ -37,8 +41,11 @@ const Home = () => {
                   Ban xây dựng
                 </span>
               </div>
-            </div>
-            <div className="relative h-48 rounded-lg overflow-hidden group cursor-pointer">
+            </Link>
+            <Link
+              to="/hoi-vien/tra-cuu?board=trade"
+              className="relative h-48 rounded-lg overflow-hidden group cursor-pointer"
+            >
               <img
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
                 alt="Banner 2"
@@ -50,7 +57,7 @@ const Home = () => {
                   Ban thương mại dịch vụ
                 </span>
               </div>
-            </div>
+            </Link>
           </motion.div>
         </div>
       </section>

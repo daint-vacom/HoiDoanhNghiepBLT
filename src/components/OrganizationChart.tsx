@@ -28,11 +28,10 @@ const OrganizationChart = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-red-900 text-white px-10 py-6 font-black text-xl text-center border-l-4 border-red-500 w-full max-w-md z-10 tracking-widest uppercase"
+            className="bg-red-900 text-white px-10 py-6 font-black text-xl text-center border-l-4 border-red-500 w-full max-w-md z-10 tracking-widest uppercase flex flex-col items-center justify-center gap-2 cursor-default"
           >
-            HỘI TƯ VẤN VÀ ĐẠI LÝ THUẾ
-            <br />
-            THÀNH PHỐ HỒ CHÍ MINH
+            <span className="text-sm">HỘI DOANH NGHIỆP</span>
+            <span>BÌNH LỢI TRUNG - BLTBA</span>
           </motion.div>
 
           {/* Line down */}

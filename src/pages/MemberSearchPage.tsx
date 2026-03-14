@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
@@ -16,9 +17,8 @@ interface Member {
   id: string;
   name: string;
   logo: string;
-  industry: string;
-  industryEn: string;
-  board: "Ban Xây dựng" | "Ban Thương mại Dịch vụ";
+  industries: string[];
+  boards: string[];
   description: string;
   productTypes: string[];
   mainMaterials: string[];
@@ -33,9 +33,8 @@ const membersData: Member[] = [
     id: "1",
     name: "CÔNG TY CỔ PHẦN LANDCO",
     logo: "https://picsum.photos/seed/landco/200/200",
-    industry: "Chế biến Gỗ",
-    industryEn: "Wood processing",
-    board: "Ban Xây dựng",
+    industries: ["Chế biến Gỗ", "Cung cấp vật liệu xây dựng"],
+    boards: ["Ban Xây dựng", "Ban Thương mại Dịch vụ"],
     description:
       "LANDCO là đơn vị hàng đầu trong lĩnh vực sản xuất và thi công nội thất cao cấp, chuyên cung cấp các giải pháp toàn diện cho không gian sống và làm việc chuyên nghiệp.",
     productTypes: [
@@ -66,9 +65,8 @@ const membersData: Member[] = [
     id: "2",
     name: "TẬP ĐOÀN GỖ AN CƯỜNG",
     logo: "https://picsum.photos/seed/ancuong/200/200",
-    industry: "Vật liệu nội thất",
-    industryEn: "Interior materials",
-    board: "Ban Xây dựng",
+    industries: ["Vật liệu nội thất", "Cung cấp vật liệu xây dựng"],
+    boards: ["Ban Xây dựng"],
     description:
       "An Cường là nhà sản xuất cung cấp nguyên vật liệu trang trí nội thất và vật liệu décor hàng đầu tại Việt Nam và khu vực Đông Nam Á.",
     productTypes: [
@@ -88,9 +86,8 @@ const membersData: Member[] = [
     id: "3",
     name: "CÔNG TY TNHH MINH LONG",
     logo: "https://picsum.photos/seed/minhlong/200/200",
-    industry: "Vật liệu trang trí",
-    industryEn: "Decorative materials",
-    board: "Ban Xây dựng",
+    industries: ["Vật liệu trang trí"],
+    boards: ["Ban Xây dựng"],
     description:
       "Minh Long chuyên cung cấp các loại vật liệu gỗ công nghiệp, tấm vật liệu phủ Melamine, Laminate, Acrylic phục vụ cho ngành sản xuất nội thất hiện đại.",
     productTypes: [
@@ -110,9 +107,8 @@ const membersData: Member[] = [
     id: "4",
     name: "CÔNG TY CP XÂY DỰNG & NỘI THẤT DELTA",
     logo: "https://picsum.photos/seed/delta/200/200",
-    industry: "Xây dựng & Nội thất",
-    industryEn: "Construction & Interior",
-    board: "Ban Xây dựng",
+    industries: ["Xây dựng & Nội thất"],
+    boards: ["Ban Xây dựng"],
     description:
       "Delta là tổng thầu xây dựng và thi công nội thất uy tín, với nhiều năm kinh nghiệm trong các dự án dân dụng, công nghiệp và hạ tầng quy mô lớn.",
     productTypes: ["Thi công nội thất", "Xây dựng dân dụng", "Tư vấn thiết kế"],
@@ -126,6 +122,10 @@ const membersData: Member[] = [
 
 const boards = [
   {
+    id: "all",
+    name: "Tất cả",
+  },
+  {
     id: "construction",
     name: "Ban Xây dựng",
     industries: [
@@ -135,6 +135,7 @@ const boards = [
       "Xây dựng & Nội thất",
       "Kiến trúc",
       "Cơ điện",
+      "Cung cấp vật liệu xây dựng",
     ],
   },
   {
@@ -148,40 +149,42 @@ const boards = [
       "Ẩm thực",
       "Y tế",
       "Công nghệ thông tin",
+      "Cung cấp vật liệu xây dựng",
     ],
   },
 ];
 
+const allIndustries = Array.from(
+  new Set(
+    boards.filter((b) => b.industries).flatMap((b) => b.industries || []),
+  ),
+).sort();
+
 const MemberSearchPage = () => {
+  const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const [isFilterExpanded, setIsFilterExpanded] = useState(true);
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [selectedBoardId, setSelectedBoardId] = useState(
+    searchParams.get("board") || "all",
+  );
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
-  const toggleIndustry = (industry: string) => {
-    setSelectedIndustries((prev) =>
-      prev.includes(industry)
-        ? prev.filter((i) => i !== industry)
-        : [...prev, industry],
-    );
-  };
-
-  const toggleBoardAll = (boardIndustries: string[]) => {
-    const allSelected = boardIndustries.every((ind) =>
-      selectedIndustries.includes(ind),
-    );
-    if (allSelected) {
-      // Remove all industries of this board
-      setSelectedIndustries((prev) =>
-        prev.filter((ind) => !boardIndustries.includes(ind)),
-      );
-    } else {
-      // Add all industries of this board that are not already selected
-      const newIndustries = boardIndustries.filter(
-        (ind) => !selectedIndustries.includes(ind),
-      );
-      setSelectedIndustries((prev) => [...prev, ...newIndustries]);
+  useEffect(() => {
+    const boardFromUrl = searchParams.get("board");
+    if (boardFromUrl && boards.some((b) => b.id === boardFromUrl)) {
+      setSelectedBoardId(boardFromUrl);
     }
-  };
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Offset matches top-[64px] (header height usually)
+      setIsSticky(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const filteredMembers = useMemo(() => {
     return membersData.filter((member) => {
@@ -190,13 +193,22 @@ const MemberSearchPage = () => {
         member.productTypes.some((pt) =>
           pt.toLowerCase().includes(searchTerm.toLowerCase()),
         ) ||
-        member.industry.toLowerCase().includes(searchTerm.toLowerCase());
+        member.industries.some((ind) =>
+          ind.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+
+      const matchesBoard =
+        selectedBoardId === "all" ||
+        member.boards.includes(
+          boards.find((b) => b.id === selectedBoardId)?.name || "",
+        );
+
       const matchesIndustry =
-        selectedIndustries.length === 0 ||
-        selectedIndustries.includes(member.industry);
-      return matchesSearch && matchesIndustry;
+        !selectedIndustry || member.industries.includes(selectedIndustry);
+
+      return matchesSearch && matchesBoard && matchesIndustry;
     });
-  }, [searchTerm, selectedIndustries]);
+  }, [searchTerm, selectedIndustry, selectedBoardId]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -226,8 +238,12 @@ const MemberSearchPage = () => {
         </div>
       </section>
 
-      {/* Search & Filter Bar */}
-      <div className="bg-white border-b border-gray-200 sticky top-[64px] z-40">
+      {/* Search Bar - Sticky */}
+      <div
+        className={`bg-white sticky top-[64px] z-40 transition-shadow duration-300 ${
+          isSticky ? "shadow-md border-b border-gray-200" : ""
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-0">
             {/* Search Input */}
@@ -269,69 +285,68 @@ const MemberSearchPage = () => {
             className="bg-gray-50 border-b border-gray-200 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest">
-                  Lọc theo Ban & Ngành nghề
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-red-600" />
+                  Lọc theo Ngành nghề chi tiết
                 </h3>
-                {selectedIndustries.length > 0 && (
+                {selectedIndustry && (
                   <button
-                    onClick={() => setSelectedIndustries([])}
-                    className="text-xs font-bold text-red-700 hover:text-red-800 transition-colors flex items-center gap-1"
+                    onClick={() => setSelectedIndustry("")}
+                    className="text-xs font-bold text-red-700 hover:text-red-800 transition-colors flex items-center gap-1 w-fit"
                   >
-                    Xóa tất cả bộ lọc ({selectedIndustries.length})
+                    Xóa bộ lọc
                   </button>
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                {boards.map((board) => (
-                  <div key={board.id} className="space-y-4">
-                    <div className="flex items-center justify-between pb-2 border-b border-gray-200">
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-red-700"></div>
-                        <span className="font-extrabold text-gray-900 text-xs uppercase tracking-wider">
-                          {board.name}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => toggleBoardAll(board.industries)}
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded transition-all border ${
-                          board.industries.every((ind) =>
-                            selectedIndustries.includes(ind),
-                          )
-                            ? "bg-red-700 text-white border-red-700"
-                            : "bg-white text-gray-500 border-gray-200 hover:border-red-700 hover:text-red-700"
-                        }`}
-                      >
-                        Chọn tất cả
-                      </button>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {board.industries.map((industry) => (
-                        <button
-                          key={industry}
-                          onClick={() => toggleIndustry(industry)}
-                          className={`px-3 py-1.5 rounded text-xs font-semibold transition-all border ${
-                            selectedIndustries.includes(industry)
-                              ? "bg-red-700 text-white border-red-700 shadow-sm"
-                              : "bg-white text-gray-600 border-gray-100 hover:border-red-200 hover:text-red-700"
-                          }`}
-                        >
-                          {industry}
-                        </button>
-                      ))}
-                    </div>
+              <div className="max-w-md">
+                <div className="relative group">
+                  <select
+                    value={selectedIndustry}
+                    onChange={(e) => setSelectedIndustry(e.target.value)}
+                    className="w-full bg-white border border-gray-200 rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600 appearance-none transition-all cursor-pointer font-medium"
+                  >
+                    <option value="">Tất cả ngành nghề</option>
+                    {allIndustries.map((industry) => (
+                      <option key={industry} value={industry}>
+                        {industry}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover:text-red-600 transition-colors">
+                    <ChevronDown className="w-4 h-4" />
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Department Tabs - Not Sticky */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-8 overflow-x-auto no-scrollbar">
+            {boards.map((board) => (
+              <button
+                key={board.id}
+                onClick={() => setSelectedBoardId(board.id)}
+                className={`py-4 text-sm font-bold uppercase tracking-widest whitespace-nowrap border-b-2 transition-all ${
+                  selectedBoardId === board.id
+                    ? "border-red-600 text-red-600"
+                    : "border-transparent text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                {board.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Results Section */}
-      <section className="py-16 bg-gray-50/50">
+      <div className="py-16 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-2xl font-bold text-gray-900">
@@ -355,8 +370,15 @@ const MemberSearchPage = () => {
                   className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex group cursor-pointer relative"
                 >
                   {/* Board Banner */}
-                  <div className="absolute top-0 left-0 bg-amber-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-br-lg z-10 shadow-sm uppercase tracking-wider">
-                    {member.board}
+                  <div className="absolute top-0 left-0 flex gap-0.5 z-10">
+                    {member.boards.map((board) => (
+                      <div
+                        key={board}
+                        className="bg-amber-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-br-lg shadow-sm uppercase tracking-wider"
+                      >
+                        {board}
+                      </div>
+                    ))}
                   </div>
 
                   {/* Logo Section - Left Side */}
@@ -377,10 +399,15 @@ const MemberSearchPage = () => {
                       </h3>
                     </div>
 
-                    <div className="mb-3">
-                      <span className="inline-block bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
-                        {member.industry}
-                      </span>
+                    <div className="mb-3 flex flex-wrap gap-1">
+                      {member.industries.map((ind) => (
+                        <span
+                          key={ind}
+                          className="inline-block bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
+                        >
+                          {ind}
+                        </span>
+                      ))}
                     </div>
 
                     <p className="text-gray-500 text-xs sm:text-sm mb-3 line-clamp-3 leading-relaxed">
@@ -438,7 +465,8 @@ const MemberSearchPage = () => {
                 <button
                   onClick={() => {
                     setSearchTerm("");
-                    setSelectedIndustries([]);
+                    setSelectedIndustry("");
+                    setSelectedBoardId("all");
                   }}
                   className="mt-6 text-red-700 font-semibold hover:underline"
                 >
@@ -448,7 +476,7 @@ const MemberSearchPage = () => {
             )}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* CTA Section */}
       <section className="py-20 bg-gray-900 text-white relative overflow-hidden">
