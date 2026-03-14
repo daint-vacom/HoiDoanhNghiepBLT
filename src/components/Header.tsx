@@ -56,7 +56,7 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white shadow-md py-2"
-          : "bg-white/90 backdrop-blur-sm py-4"
+          : "bg-white backdrop-blur-sm py-4"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,14 +65,14 @@ const Header = () => {
           <Link to="/" className="flex-shrink-0 flex items-center">
             <div className="flex items-center space-x-3">
               <img src={logoUrl} alt="BLTBA Logo" className="h-12 w-auto" />
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <span className="text-2xl font-bold text-red-700 tracking-tighter">
                   BLTBA
                 </span>
                 <span className="text-[8px] uppercase font-semibold text-amber-600 leading-none">
                   Bình Lợi Trung Business Association
                 </span>
-              </div>
+              </div> */}
             </div>
           </Link>
 

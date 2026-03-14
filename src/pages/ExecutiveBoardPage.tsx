@@ -1,8 +1,12 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Users, ShieldCheck, Award } from "lucide-react";
+import OrganizationChart from "../components/OrganizationChart";
 
 const ExecutiveBoardPage = () => {
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 2000], ["-20%", "20%"]);
+
   const bchMembers = [
     {
       name: "Phùng Quốc Mẫn",
@@ -44,11 +48,7 @@ const ExecutiveBoardPage = () => {
       role: "Phó chủ tịch",
       img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=1974&auto=format&fit=crop",
     },
-    {
-      name: "Trần Anh Vũ",
-      role: "Phó chủ tịch",
-      img: "https://images.unsplash.com/photo-1544168190-79c154570661?q=80&w=1974&auto=format&fit=crop",
-    },
+
     {
       name: "Lương Thị Ngọc Xuyến",
       role: "Phó chủ tịch",
@@ -104,29 +104,81 @@ const ExecutiveBoardPage = () => {
     },
   ];
 
-  const MemberCard = ({ member }: { member: any }) => (
+  // Re-organize board members into 3 main levels based on standard executive structure
+  const president = bchMembers.filter((m) => m.role === "Chủ tịch");
+
+  const level2 = bchMembers.filter(
+    (m) =>
+      m.role === "Phó chủ tịch thường trực" ||
+      m.role === "Phó chủ tịch - Tổng thư ký" ||
+      m.role === "Phó chủ tịch",
+  );
+
+  const level3 = [
+    ...bchMembers.filter((m) => m.role === "Ủy viên Ban thường vụ"),
+    ...inspectionBoard, // Integrate Ban kiểm tra into lowest tier for a cleaner look
+  ];
+
+  // Add mock company data to see UI changes
+  if (president[0]) president[0].company = "Tập đoàn Vingroup";
+  if (level2[0]) level2[0].company = "Công ty CP ABC";
+  if (level2[1]) level2[1].company = "Tập đoàn Hòa Phát";
+  if (level2[2]) level2[2].company = "Công ty Gỗ Đức Thành";
+  if (level2[3]) level2[3].company = "Sacomreal";
+  if (level3[0]) level3[0].company = "Vacom JSC";
+  if (level3[3]) level3[3].company = "Techcombank";
+
+  const HierarchicalMemberCard = ({
+    member,
+    sizeClass,
+    borderClass = "border-white/20",
+    borderWidthClass = "border-4",
+    textClass,
+    delay = 0,
+  }: {
+    member: any;
+    sizeClass: string;
+    borderClass?: string;
+    borderWidthClass?: string;
+    textClass: { name: string; role: string };
+    delay?: number;
+  }) => (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center text-center group relative py-3 px-3 rounded-2xl transition-all duration-300 hover:bg-white/5 w-48 md:w-56 lg:w-64"
     >
-      <div className="relative aspect-[4/5] sm:aspect-square md:aspect-[4/5] overflow-hidden bg-gray-100">
+      <div
+        className={`${sizeClass} relative rounded-full overflow-hidden ${borderWidthClass} ${borderClass} shadow-lg mb-3 transition-all duration-500 group-hover:scale-105`}
+      >
         <img
           src={member.img}
           alt={member.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-blue-900/5 group-hover:bg-transparent transition-colors duration-300"></div>
       </div>
-      <div className="p-3 sm:p-4 flex flex-col gap-1 flex-grow justify-center text-center">
-        <h4 className="font-bold text-gray-900 group-hover:text-red-700 transition-colors text-[14px] sm:text-base leading-tight">
+
+      <div className="relative z-10">
+        <h4
+          className={`font-bold text-white uppercase tracking-tight ${textClass.name} drop-shadow-md leading-tight group-hover:text-amber-400 transition-colors duration-300`}
+        >
           {member.name}
         </h4>
-        <p className="text-[11px] sm:text-[12px] text-red-600 font-extrabold uppercase tracking-wider line-clamp-2">
+        <p
+          className={`font-semibold uppercase tracking-widest ${textClass.role || "text-amber-500"} mt-0.5 drop-shadow-sm leading-tight`}
+        >
           {member.role}
         </p>
+
+        {member.company && (
+          <p className="text-gray-400 text-[10px] md:text-[11px] mt-1.5 font-medium leading-tight opacity-80 italic">
+            {member.company}
+          </p>
+        )}
       </div>
     </motion.div>
   );
@@ -134,15 +186,15 @@ const ExecutiveBoardPage = () => {
   return (
     <div className="bg-white">
       {/* Header Section */}
-      <section className="pt-32 pb-20 relative bg-gray-900 overflow-hidden min-h-[40vh] flex items-center">
+      <section className="pt-32 pb-20 relative bg-gray-950 overflow-hidden min-h-[40vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80"
             alt="Board context"
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-20 object-right"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-gray-900/80 to-gray-900"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950/80 via-gray-950/80 to-gray-950"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
@@ -155,7 +207,7 @@ const ExecutiveBoardPage = () => {
               Ban Chấp Hành <span className="text-red-500">Nhiệm Kỳ I</span>
             </h1>
             <div className="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed">
+            <p className="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed opacity-90">
               Hội đồng lãnh đạo tâm huyết, dẫn dắt cộng đồng doanh nghiệp BLTBA
               phát triển bền vững và gắn kết.
             </p>
@@ -163,152 +215,86 @@ const ExecutiveBoardPage = () => {
         </div>
       </section>
 
-      {/* Organizational Structure Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tight mb-2">
-              Sơ đồ tổ chức
-            </h2>
-            <div className="h-1 w-12 bg-amber-500 mx-auto mt-4 mb-4" />
-            <p className="text-xs text-gray-500 uppercase font-bold tracking-[0.2em]">
-              Phân cấp & Vận hành
-            </p>
-          </div>
+      {/* Organizagram - Kept for structure context, or can be removed if strictly members only */}
+      <OrganizationChart />
 
-          <div className="max-w-4xl mx-auto flex flex-col items-center relative">
-            {/* Root */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-red-900 to-red-800 text-white px-10 py-5 rounded-2xl shadow-xl font-black text-lg text-center border border-red-700/50 w-full max-w-sm z-10"
-            >
-              ĐẠI HỘI ĐẠI BIỂU
-              <div className="text-[10px] text-red-200 mt-1 font-bold tracking-widest uppercase mb-1">
-                Nhiệm kỳ I (2025 - 2028)
-              </div>
-            </motion.div>
+      {/* Hierarchical Board Members Section */}
+      <section className="py-16 relative overflow-hidden bg-[#0a0f1a]">
+        {/* Blended Background with blue tint and subtle pattern */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1a] via-[#0a162e] to-[#0a0f1a]"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
 
-            {/* Line down */}
-            <div className="w-px h-8 bg-gray-300"></div>
+          <motion.img
+            src="https://viet-power.vn/wp-content/uploads/2022/08/chup-anh-profile-cong-ty-3.jpg"
+            alt="Office background"
+            className="absolute left-0 top-[-20%] w-full h-[140%] object-cover opacity-10 grayscale transform-gpu will-change-transform"
+            style={{ y: backgroundY }}
+            referrerPolicy="no-referrer"
+          />
 
-            {/* Horizontal Branch */}
-            <div className="relative w-full max-w-[600px] flex flex-col md:flex-row justify-between md:items-start items-center gap-8 md:gap-0">
-              {/* Desktop Horizontal Line connecting BKT and BCH */}
-              <div className="absolute top-0 left-[25%] right-[25%] h-px bg-gray-300 hidden md:block"></div>
-
-              {/* Branch 1: Ban Kiểm Tra */}
-              <div className="flex flex-col items-center w-full md:w-1/2 pt-0 md:pt-6 relative">
-                <div className="w-px h-6 bg-gray-300 absolute top-0 hidden md:block"></div>
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white border border-amber-200 text-amber-700 px-6 py-4 rounded-xl shadow-md hover:shadow-lg transition-shadow font-bold text-sm text-center flex items-center justify-center gap-2 cursor-default w-[220px]"
-                >
-                  <ShieldCheck size={18} />
-                  BAN KIỂM TRA
-                </motion.div>
-                {/* Mobile connecting line */}
-                <div className="w-px h-8 bg-gray-300 md:hidden mt-2"></div>
-              </div>
-
-              {/* Branch 2: Ban Chấp Hành */}
-              <div className="flex flex-col items-center w-full md:w-1/2 pt-0 md:pt-6 relative">
-                <div className="w-px h-6 bg-gray-300 absolute top-0 hidden md:block"></div>
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white border-2 border-red-200 text-red-800 px-6 py-4 rounded-xl shadow-md hover:shadow-lg transition-shadow font-bold text-sm text-center flex items-center justify-center gap-2 relative z-10 w-[220px]"
-                >
-                  <Users size={18} />
-                  BAN CHẤP HÀNH
-                </motion.div>
-
-                <div className="w-px h-8 bg-gray-300"></div>
-
-                {/* Sub-branches of Ban Chấp Hành */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="relative w-full flex justify-center mt-2"
-                >
-                  <div className="grid grid-cols-2 gap-3 w-[260px] sm:w-[320px]">
-                    {[
-                      "BAN THƯỜNG VỤ",
-                      "BAN CỐ VẤN",
-                      "BAN CHUYÊN GIA",
-                      "CÁC CÂU LẠC BỘ",
-                    ].map((label, idx) => (
-                      <div
-                        key={idx}
-                        className={`px-2 sm:px-4 py-3 rounded-lg border text-[11px] sm:text-xs font-bold text-center flex items-center justify-center ${label === "BAN THƯỜNG VỤ" ? "bg-red-50 text-red-800 border-red-200 shadow-sm" : "bg-white text-gray-600 border-gray-200 shadow-sm"}`}
-                      >
-                        {label}
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
+          {/* Subtle blue & red glow */}
+          <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-600/10 rounded-full blur-[120px] transform-gpu"></div>
+          <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-red-600/5 rounded-full blur-[120px] transform-gpu"></div>
         </div>
-      </section>
 
-      {/* Board Members - Card Grid */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Ban Chấp Hành List */}
-          <div className="mb-20">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-4 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shrink-0">
-                  <Users size={24} />
-                </div>
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase tracking-tight">
-                    Ban Chấp Hành
-                  </h3>
-                  <p className="text-gray-500 text-sm mt-1">
-                    Đội ngũ lãnh đạo và các Ủy viên thường trực
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-              {bchMembers.map((member, index) => (
-                <MemberCard key={index} member={member} />
-              ))}
-            </div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center">
+          {/* Level 1: Chủ tịch */}
+          <div className="mb-12 w-full flex justify-center">
+            {president.map((member, idx) => (
+              <HierarchicalMemberCard
+                key={idx}
+                member={member}
+                sizeClass="w-36 h-36 md:w-44 md:h-44"
+                borderWidthClass="border-[4px]"
+                borderClass="border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.2)]"
+                textClass={{
+                  name: "text-xl md:text-2xl text-white",
+                  role: "text-xs md:text-sm text-amber-500",
+                }}
+                delay={0.1}
+              />
+            ))}
           </div>
 
-          {/* Ban Kiểm Tra List */}
-          <div>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-4 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center shrink-0">
-                  <ShieldCheck size={24} />
-                </div>
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase tracking-tight">
-                    Ban Kiểm Tra
-                  </h3>
-                  <p className="text-gray-500 text-sm mt-1">
-                    Giám sát và đảm bảo tính minh bạch
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-3"></div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-              {inspectionBoard.map((member, index) => (
-                <MemberCard key={index} member={member} />
-              ))}
-            </div>
+          {/* Level 2: Phó chủ tịch */}
+          <div className="mb-3 w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center justify-items-center max-w-6xl mx-auto">
+            {level2.map((member, idx) => (
+              <HierarchicalMemberCard
+                key={idx}
+                member={member}
+                sizeClass="w-24 h-24 md:w-32 md:h-32"
+                borderWidthClass="border-[3px]"
+                borderClass="border-amber-500/80 shadow-[0_0_20px_rgba(245,158,11,0.15)]"
+                textClass={{
+                  name: "text-base md:text-lg text-white",
+                  role: "text-[10px] md:text-xs text-amber-500",
+                }}
+                delay={0.2 + idx * 0.05}
+              />
+            ))}
+          </div>
+
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12 max-w-4xl mx-auto"></div>
+
+          {/* Level 3: Ủy viên & Ban kiểm tra */}
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-8 justify-center justify-items-center max-w-7xl mx-auto">
+            {level3.map((member, idx) => (
+              <HierarchicalMemberCard
+                key={idx}
+                member={member}
+                sizeClass="w-16 h-16 md:w-24 md:h-24"
+                borderWidthClass="border-[2px]"
+                borderClass="border-amber-600/60 shadow-[0_0_15px_rgba(245,158,11,0.1)]"
+                textClass={{
+                  name: "text-[13px] md:text-sm text-white",
+                  role: "text-[9px] md:text-[10px] text-amber-600",
+                }}
+                delay={0.3 + idx * 0.03}
+              />
+            ))}
           </div>
         </div>
       </section>
