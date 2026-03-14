@@ -392,7 +392,7 @@ const MemberSearchPage = () => {
                   </div>
 
                   {/* Content Section - Right Side */}
-                  <div className="p-5 sm:p-6 flex-grow flex flex-col min-w-0">
+                  <div className="mt-5 p-5 sm:p-6 flex-grow flex flex-col min-w-0">
                     <div className="mb-1">
                       <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-red-700 transition-colors line-clamp-1 leading-tight">
                         {member.name}
