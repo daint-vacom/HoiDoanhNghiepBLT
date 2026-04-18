@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
@@ -162,6 +162,7 @@ const allIndustries = Array.from(
 
 const MemberSearchPage = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [selectedBoardId, setSelectedBoardId] = useState(
@@ -367,6 +368,7 @@ const MemberSearchPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: (index % 4) * 0.05 }}
+                  onClick={() => navigate(`/hoi-vien/${member.id}`)}
                   className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex group cursor-pointer relative"
                 >
                   {/* Board Banner */}

@@ -8,6 +8,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import MembersPage from "./pages/MembersPage";
 import MemberSearchPage from "./pages/MemberSearchPage";
+import MemberDetailPage from "./pages/MemberDetailPage";
 import CharterPage from "./pages/CharterPage";
 import ExecutiveBoardPage from "./pages/ExecutiveBoardPage";
 // Placeholder components for other pages
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/hoi-vien">
             <Route index element={<MembersPage />} />
             <Route path="tra-cuu" element={<MemberSearchPage />} />
+            <Route path=":id" element={<MemberDetailPage />} />
           </Route>
 
           <Route path="/tin-tuc">
